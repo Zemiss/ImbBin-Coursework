@@ -12,7 +12,7 @@ if str(SRC) not in sys.path:
 import joblib
 import pandas as pd
 
-from aps_failure.modeling import (
+from modeling import (
     TARGET_COLUMN,
     align_features,
     evaluate_predictions,
