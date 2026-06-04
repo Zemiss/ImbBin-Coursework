@@ -1,0 +1,25 @@
+# Data files should not be submitted or committed.
+data/
+*.csv
+*.csv.gz
+
+# Python cache and local environments.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Local experiment artifacts.
+*.zip
+*.pdf
+predictions.csv
+
+# OS and editor files.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
