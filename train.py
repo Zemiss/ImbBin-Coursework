@@ -2,11 +2,17 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parent
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
 import joblib
 from sklearn.model_selection import train_test_split
 
-from aps_model import (
+from aps_failure.modeling import (
     TARGET_COLUMN,
     align_features,
     evaluate_predictions,
@@ -20,7 +26,11 @@ from aps_model import (
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train APS failure classifier.")
     parser.add_argument("--train_data", required=True, help="Path to training CSV.")
-    parser.add_argument("--model_path", required=True, help="Output model path.")
+    parser.add_argument(
+        "--model_path",
+        default="models/model.joblib",
+        help="Output model path.",
+    )
     parser.add_argument("--valid_size", type=float, default=0.2)
     parser.add_argument("--random_state", type=int, default=42)
     return parser.parse_args()
@@ -55,7 +65,15 @@ def main() -> None:
         "model": final_model,
         "threshold": threshold,
         "feature_columns": list(x.columns),
-        "validation_metrics": valid_metrics,
+        "validation_metrics": {
+            "cost": valid_metrics.cost,
+            "precision": valid_metrics.precision,
+            "recall": valid_metrics.recall,
+            "f1": valid_metrics.f1,
+            "micro_f1": valid_metrics.micro_f1,
+            "macro_f1": valid_metrics.macro_f1,
+            "confusion": valid_metrics.confusion,
+        },
         "validation_cost": validation_cost,
         "random_state": args.random_state,
     }

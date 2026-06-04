@@ -50,7 +50,7 @@ random_state = 42
 threshold = 0.0110
 ```
 
-随后使用全量训练数据重新训练最终模型，并将模型、阈值和特征列顺序一起保存到 `model.joblib`。
+随后使用全量训练数据重新训练最终模型，并将模型、阈值和特征列顺序一起保存到 `models/model.joblib`。
 
 ## 5. 验证结果
 
@@ -91,13 +91,13 @@ Macro-F1 = 0.7620
 训练命令：
 
 ```bash
-python train.py --train_data data/ml_train.csv --model_path model.joblib
+python train.py --train_data data/ml_train.csv --model_path models/model.joblib
 ```
 
 评测命令：
 
 ```bash
-python test.py --test_data <eval_data.csv> --model_path model.joblib
+python test.py --test_data <eval_data.csv> --model_path models/model.joblib
 ```
 
 当评测数据包含 `class` 标签列时，`test.py` 会打印以下指标：
@@ -119,9 +119,10 @@ python test.py --test_data <eval_data.csv> --model_path model.joblib
 
 - `train.py`：训练模型、选择阈值并保存权重文件；
 - `test.py`：加载模型并在评测数据上输出指标或预测结果；
-- `aps_model.py`：公共数据读取、模型构建、阈值选择和指标计算函数；
-- `model.joblib`：训练得到的模型权重文件；
+- `src/aps_failure/modeling.py`：公共数据读取、模型构建、阈值选择和指标计算函数；
+- `models/model.joblib`：训练得到的模型权重文件；
 - `requirements.txt`：运行所需依赖；
-- `experiment_report.md`：本实验报告。
+- `docs/experiment_report.md`：本实验报告；
+- `tests/test_aps_model.py`：核心指标和阈值选择逻辑的单元测试。
 
 提交时不应包含 `data/` 目录、训练数据、测试数据或由数据复制得到的中间文件。

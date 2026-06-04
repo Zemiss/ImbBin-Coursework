@@ -2,17 +2,33 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parent
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
 import joblib
 import pandas as pd
 
-from aps_model import TARGET_COLUMN, align_features, evaluate_predictions, load_data, split_xy
+from aps_failure.modeling import (
+    TARGET_COLUMN,
+    align_features,
+    evaluate_predictions,
+    load_data,
+    split_xy,
+)
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Evaluate APS failure classifier.")
     parser.add_argument("--test_data", required=True, help="Path to evaluation CSV.")
-    parser.add_argument("--model_path", required=True, help="Path to saved model package.")
+    parser.add_argument(
+        "--model_path",
+        default="models/model.joblib",
+        help="Path to saved model package.",
+    )
     parser.add_argument(
         "--prediction_path",
         default=None,
