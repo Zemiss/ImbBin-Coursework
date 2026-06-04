@@ -66,14 +66,14 @@ Micro-F1 = 0.9720
 Macro-F1 = 0.7620
 ```
 
-与给定 baseline 相比：
+与 baseline 在同一份 `data/ml_train.csv` 上的测试结果相比：
 
-| 模型 | Cost | Precision | Recall | F1 | Micro-F1 | Macro-F1 |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Baseline | 19020 | 0.4618 | 0.9200 | 0.6150 | 0.9730 | 0.8005 |
-| 本实验模型 | 5320 | 0.3712 | 0.9800 | 0.5385 | 0.9720 | 0.7620 |
+| 模型 | 阈值 | 混淆矩阵 [TN FP FN TP] | Cost | Precision | Recall | F1 | Micro-F1 | Macro-F1 |
+| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Baseline | 0.49 | [57386, 1614, 44, 956] | 38140 | 0.3720 | 0.9560 | 0.5356 | 0.9724 | 0.7607 |
+| 本实验模型 | 0.0110 | [57606, 1394, 6, 994] | 16940 | 0.4162 | 0.9940 | 0.5868 | 0.9767 | 0.7874 |
 
-可以看到，本实验模型显著降低了主指标 APS Cost。代价下降的主要原因是 FN 数量较少，验证集中 200 个正类样本只漏报 4 个。代价函数中漏报权重为 500，因此减少 FN 对最终 Cost 的影响远大于少量增加 FP。
+可以看到，本实验模型在同一份训练数据上将 APS Cost 从 38140 降低到 16940。主要原因是漏报数 FN 从 44 降低到 6，而误报数 FP 也从 1614 降低到 1394。由于代价函数中一次 FN 的权重为 500，远高于一次 FP 的权重 10，因此 FN 的显著减少直接带来了维修代价的大幅下降。同时，本实验模型的 Precision、Recall、F1、Micro-F1 和 Macro-F1 均高于 baseline，说明改进并不是单纯依靠增加误报换取召回率，而是在当前数据上同时改善了正类识别能力和整体分类效果。
 
 ## 6. 结果分析
 
@@ -91,13 +91,13 @@ Macro-F1 = 0.7620
 训练命令：
 
 ```bash
-python train.py --train_data data/ml_train.csv --model_path models/model.joblib
+python main/train.py --train_data data/ml_train.csv --model_path main/models/model.joblib
 ```
 
 评测命令：
 
 ```bash
-python test.py --test_data <eval_data.csv> --model_path models/model.joblib
+python main/test.py --test_data <eval_data.csv> --model_path main/models/model.joblib
 ```
 
 当评测数据包含 `class` 标签列时，`test.py` 会打印以下指标：
@@ -117,12 +117,11 @@ python test.py --test_data <eval_data.csv> --model_path models/model.joblib
 
 主要文件如下：
 
-- `train.py`：训练模型、选择阈值并保存权重文件；
-- `test.py`：加载模型并在评测数据上输出指标或预测结果；
-- `src/aps_failure/modeling.py`：公共数据读取、模型构建、阈值选择和指标计算函数；
-- `models/model.joblib`：训练得到的模型权重文件；
-- `requirements.txt`：运行所需依赖；
-- `docs/experiment_report.md`：本实验报告；
-- `tests/test_aps_model.py`：核心指标和阈值选择逻辑的单元测试。
+- `main/train.py`：训练模型、选择阈值并保存权重文件；
+- `main/test.py`：加载模型并在评测数据上输出指标或预测结果；
+- `main/src/modeling.py`：公共数据读取、模型构建、阈值选择和指标计算函数；
+- `main/models/model.joblib`：训练得到的模型权重文件；
+- `main/requirements.txt`：运行所需依赖；
+- `main/report.md`：本实验报告。
 
 提交时不应包含 `data/` 目录、训练数据、测试数据或由数据复制得到的中间文件。
