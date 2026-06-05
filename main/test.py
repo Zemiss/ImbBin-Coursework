@@ -12,6 +12,7 @@ if str(SRC) not in sys.path:
 import joblib
 import pandas as pd
 
+from config import load_config
 from modeling import (
     TARGET_COLUMN,
     align_features,
@@ -23,22 +24,40 @@ from modeling import (
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Evaluate APS failure classifier.")
-    parser.add_argument("--test_data", required=True, help="Path to evaluation CSV.")
+    parser.add_argument(
+        "--test_data", 
+        default=None,
+        help="Path to evaluation CSV (default from config)."
+    )
     parser.add_argument(
         "--model_path",
-        default="models/model.joblib",
-        help="Path to saved model package.",
+        default=None,
+        help="Path to saved model package (default from config).",
     )
     parser.add_argument(
         "--prediction_path",
         default=None,
         help="Optional CSV path for predictions when labels are unavailable.",
     )
+    parser.add_argument(
+        "--config",
+        default=None,
+        help="Path to config file (default: configs/default.yaml)"
+    )
     return parser.parse_args()
 
 
 def main() -> None:
-    args = parse_args()
+    cli_args = parse_args()
+    # Load config file and merge with CLI arguments
+    args = load_config("test", cli_args, cli_args.config)
+    
+    # Ensure required arguments are present
+    if not args.test_data:
+        raise ValueError("--test_data is required (not found in CLI args or config)")
+    if not args.model_path:
+        raise ValueError("--model_path is required (not found in CLI args or config)")
+    
     package = joblib.load(args.model_path)
     model = package["model"]
     threshold = float(package["threshold"])

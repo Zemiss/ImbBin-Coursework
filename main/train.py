@@ -12,6 +12,7 @@ if str(SRC) not in sys.path:
 import joblib
 from sklearn.model_selection import train_test_split
 
+from config import load_config
 from modeling import (
     TARGET_COLUMN,
     align_features,
@@ -25,19 +26,47 @@ from modeling import (
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train APS failure classifier.")
-    parser.add_argument("--train_data", required=True, help="Path to training CSV.")
+    parser.add_argument(
+        "--train_data", 
+        default=None,
+        help="Path to training CSV (default from config)."
+    )
     parser.add_argument(
         "--model_path",
-        default="models/model.joblib",
-        help="Output model path.",
+        default=None,
+        help="Output model path (default from config).",
     )
-    parser.add_argument("--valid_size", type=float, default=0.2)
-    parser.add_argument("--random_state", type=int, default=42)
+    parser.add_argument(
+        "--valid_size", 
+        type=float, 
+        default=None,
+        help="Validation set ratio (default from config)"
+    )
+    parser.add_argument(
+        "--random_state", 
+        type=int, 
+        default=None,
+        help="Random seed (default from config)"
+    )
+    parser.add_argument(
+        "--config",
+        default=None,
+        help="Path to config file (default: configs/default.yaml)"
+    )
     return parser.parse_args()
 
 
 def main() -> None:
-    args = parse_args()
+    cli_args = parse_args()
+    # Load config file and merge with CLI arguments
+    args = load_config("train", cli_args, cli_args.config)
+    
+    # Ensure required arguments are present
+    if not args.train_data:
+        raise ValueError("--train_data is required (not found in CLI args or config)")
+    if not args.model_path:
+        raise ValueError("--model_path is required (not found in CLI args or config)")
+    
     data = load_data(args.train_data)
     if TARGET_COLUMN not in data.columns:
         raise ValueError(f"training data must contain '{TARGET_COLUMN}' column")

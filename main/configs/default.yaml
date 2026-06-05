@@ -1,0 +1,12 @@
+# 训练参数
+train:
+  train_data: "../data/ml_train.csv"
+  model_path: "models/model.joblib"
+  valid_size: 0.2
+  random_state: 42
+
+# 测试参数
+test:
+  test_data: "../data/ml_train.csv"
+  model_path: "models/model.joblib"
+  prediction_path: null

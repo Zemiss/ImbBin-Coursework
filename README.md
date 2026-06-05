@@ -32,11 +32,15 @@ cd C:\Users\12445\Desktop\任务一+2411273+谢博
 
 ## 训练
 
+python -m main.train
+
 ```
 python -m main.train --train_data data\ml_train.csv --model_path main\models\model.joblib
 ```
 
 ## 测试
+
+python -m main.test
 
 ```
 python -m main.test --test_data data\ml_train.csv --model_path main\models\model.joblib
