@@ -91,13 +91,13 @@ Macro-F1 = 0.7620
 训练命令：
 
 ```bash
-python main/train.py --train_data data/ml_train.csv --model_path main/models/model.joblib
+python train.py --train_data ../data/ml_train.csv --model_path models/model.joblib
 ```
 
 评测命令：
 
 ```bash
-python main/test.py --test_data <eval_data.csv> --model_path main/models/model.joblib
+python test.py --test_data <eval_data.csv> --model_path models/model.joblib
 ```
 
 当评测数据包含 `class` 标签列时，`test.py` 会打印以下指标：
@@ -124,4 +124,3 @@ python main/test.py --test_data <eval_data.csv> --model_path main/models/model.j
 - `main/requirements.txt`：运行所需依赖；
 - `main/report.md`：本实验报告。
 
-提交时不应包含 `data/` 目录、训练数据、测试数据或由数据复制得到的中间文件。

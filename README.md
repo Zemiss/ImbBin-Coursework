@@ -25,20 +25,21 @@
 
 推荐使用 Python 3.12。本机使用 `conda` 环境 `py312`。
 
-```powershell
+```
 conda activate py312
+cd C:\Users\12445\Desktop\任务一+2411273+谢博
 ```
 
 ## 训练
 
-```powershell
-python main\train.py --train_data data\ml_train.csv --model_path main\models\model.joblib
+```
+python -m main.train --train_data data\ml_train.csv --model_path main\models\model.joblib
 ```
 
 ## 测试
 
-```powershell
-python main\test.py --test_data data\ml_train.csv --model_path main\models\model.joblib
+```
+python -m main.test --test_data data\ml_train.csv --model_path main\models\model.joblib
 ```
 
 `test.py` 支持通过 `--test_data` 接收评测数据相对路径，并通过 `--model_path` 接收权重文件路径。评测数据包含 `class` 标签列时，会打印 APS 维修代价、Precision、Recall、F1、Micro-F1、Macro-F1 和混淆矩阵。
