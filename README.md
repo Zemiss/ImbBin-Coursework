@@ -1,6 +1,10 @@
-# APS Failure Imbalanced Binary Classification
+# 机器学习课程大作业：空气压力系统故障检测
 
-本仓库用于完成机器学习期末大作业任务一：空气压力系统故障检测。
+> APS 卡车气压系统不平衡二分类任务
+
+[![Python](https://img.shields.io/badge/Python-3.12-green?style=flat-square)](https://www.python.org/)
+![Task](https://img.shields.io/badge/Task-APS%20Binary%20Classification-orange)
+
 
 ## 目录结构
 
@@ -21,15 +25,6 @@
 `-- .gitignore
 ```
 
-## 环境
-
-推荐使用 Python 3.12。本机使用 `conda` 环境 `py312`。
-
-```
-conda activate py312
-cd C:\Users\12445\Desktop\任务一+2411273+谢博
-```
-
 ## 训练
 
 python -m main.train
@@ -47,3 +42,4 @@ python -m main.test --test_data data\ml_train.csv --model_path main\models\model
 ```
 
 `test.py` 支持通过 `--test_data` 接收评测数据相对路径，并通过 `--model_path` 接收权重文件路径。评测数据包含 `class` 标签列时，会打印 APS 维修代价、Precision、Recall、F1、Micro-F1、Macro-F1 和混淆矩阵。
+
