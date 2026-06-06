@@ -136,10 +136,20 @@ python -m main.test --test_data ../data/ml_train.csv --model_path models/model.j
 
 ## 训练
 
-**在仓库根目录运行：**
+**使用配置文件:**
 
 ```bash
 python -m main.train
+```
+
+**使用命令行参数:**
+
+```bash
+python -m main.train `
+  --train_data ../data/ml_train.csv `
+  --model_path models/model.joblib `
+  --valid_size 0.2 `
+  --random_state 42
 ```
 
 训练流程会完成以下步骤：
@@ -155,24 +165,19 @@ python -m main.train
 
 ## 测试
 
-**在仓库根目录运行默认评测：**
+**使用配置文件:**
 
 ```bash
 python -m main.test
 ```
 
-如果评测数据包含 `class` 标签列，脚本会加载 `main/models/model.joblib` 并输出：
-
-- APS 维修代价；
-- Precision、Recall、F1；
-- Micro-F1、Macro-F1；
-- 混淆矩阵 `[TN FP FN TP]`；
-- `scikit-learn` 分类报告。
-
-如果评测数据不包含标签列，脚本会输出每条样本的正类概率和预测类别。可以通过 `--prediction_path` 保存预测结果：
+**使用命令行参数:**
 
 ```bash
-python -m main.test --test_data ../data/eval.csv --prediction_path predictions.csv
+python -m main.test `
+  --test_data ../data/eval.csv `
+  --model_path models/model.joblib `
+  --prediction_path predictions.csv
 ```
 
 ## 实验结果
@@ -201,5 +206,4 @@ Cost = 10 * FP + 500 * FN
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Baseline | 0.49 | `[57386, 1614, 44, 956]` | 38140 | 0.3720 | 0.9560 | 0.5356 | 0.9724 | 0.7607 |
 | 本项目模型 | 0.0110 | `[57606, 1394, 6, 994]` | 16940 | 0.4162 | 0.9940 | 0.5868 | 0.9767 | 0.7874 |
-
 
