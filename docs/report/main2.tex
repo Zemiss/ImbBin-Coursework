@@ -1,0 +1,382 @@
+% -*- coding: utf-8 -*-
+%-------------------------designed by zcf--------------
+\documentclass[UTF8,a4paper,10pt]{ctexart}
+\usepackage[left=3.17cm, right=3.17cm, top=2.74cm, bottom=2.74cm]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx,subfig}
+\usepackage{float}
+\usepackage{cite}
+\usepackage{caption}
+\usepackage{enumerate}
+\usepackage{booktabs}
+\usepackage{multirow}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+%-------------------------字体设置--------------
+% \usepackage{times}
+\usepackage{ctex}
+\setCJKmainfont[ItalicFont=Noto Sans CJK SC Bold, BoldFont=Noto Serif CJK SC Black]{Noto Serif CJK SC}
+\newcommand{\yihao}{\fontsize{26pt}{36pt}\selectfont}
+\newcommand{\erhao}{\fontsize{22pt}{28pt}\selectfont}
+\newcommand{\xiaoer}{\fontsize{18pt}{18pt}\selectfont}
+\newcommand{\sanhao}{\fontsize{16pt}{24pt}\selectfont}
+\newcommand{\xiaosan}{\fontsize{15pt}{22pt}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{21pt}\selectfont}
+\newcommand{\banxiaosi}{\fontsize{13pt}{19.5pt}\selectfont}
+\newcommand{\xiaosi}{\fontsize{12pt}{18pt}\selectfont}
+\newcommand{\dawuhao}{\fontsize{11pt}{11pt}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{15.75pt}\selectfont}
+%-------------------------章节名----------------
+\usepackage{ctexcap}
+\CTEXsetup[name={,、},number={ \chinese{section}}]{section}
+\CTEXsetup[name={（,）},number={\chinese{subsection}}]{subsection}
+\CTEXsetup[name={,.},number={\arabic{subsubsection}}]{subsubsection}
+%-------------------------页眉页脚--------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\kaishu \leftmark}
+\rhead{\kaishu 机器学习期末实验报告}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\footrulewidth}{0pt}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\HRulegrossa}{\rule{\linewidth}{1.2mm}}
+%-----------------------伪代码------------------
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\floatname{algorithm}{Algorithm}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\makeatletter
+\newenvironment{breakablealgorithm}
+  {
+  \begin{center}
+     \refstepcounter{algorithm}
+     \hrule height.8pt depth0pt \kern2pt
+     \renewcommand{\caption}[2][\relax]{
+      {\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+      \ifx\relax##1\relax
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+      \else
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+      \fi
+      \kern2pt\hrule\kern2pt
+     }
+  }{
+     \kern2pt\hrule\relax
+  \end{center}
+  }
+\makeatother
+%------------------------代码-------------------
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{
+breaklines,
+basicstyle=\small\ttfamily,
+escapeinside=``,
+keywordstyle=\color{blue!70}\bfseries,
+commentstyle=\color{red!50!green!50!blue!50},
+stringstyle=\ttfamily,
+extendedchars=false,
+linewidth=\textwidth,
+numbers=left,
+numberstyle=\tiny\color{blue!50},
+frame=trbl,
+rulesepcolor=\color{red!20!green!20!blue!20}
+}
+%------------超链接----------
+\usepackage[colorlinks,linkcolor=black,anchorcolor=blue,citecolor=black,urlcolor=blue]{hyperref}
+%------------------------TODO-------------------
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}\hspace{-2.5pt}}
+\newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}
+%------------------------水印-------------------
+\usepackage{tikz}
+\usepackage{eso-pic}
+
+\newcommand{\watermark}[3]{\AddToShipoutPictureBG{
+\parbox[b][\paperheight]{\paperwidth}{
+\vfill%
+\centering%
+\tikz[remember picture, overlay]%
+  \node [rotate = #1, scale = #2] at (current page.center)%
+    {\textcolor{gray!80!cyan!30!magenta!30}{#3}};
+\vfill}}}
+
+%———————————————————————————————————————————正文———————————————————————————————————————————————
+\begin{document}
+\begin{titlepage}
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{NKU.png}\\[1cm]
+    \textsc{\Huge \kaishu{\textbf{南\ \ \ \ \ \ 开\ \ \ \ \ \ 大\ \ \ \ \ \ 学}} }\\[0.9cm]
+    \textsc{\huge \kaishu{\textbf{数\ \ 学\ \ 科\ \ 学\ \ 学 \ \ 院}}}\\[0.5cm]
+    \textsc{\Large \textbf{机器学习期末实验报告}}\\[0.8cm]
+    \HRule \\[0.9cm]
+    { \LARGE \bfseries 空气压力系统故障检测}\\[0.4cm]
+    \HRule \\[2.0cm]
+    \centering
+    \textsc{\LARGE 谢 \ 博\kaishu{\ \ \ \ }}\\[0.5cm]
+    \textsc{\LARGE \kaishu{年级\ :\ 2024级}}\\[0.5cm]
+    \textsc{\LARGE \kaishu{专业\ :\ 数学与人工智能}}\\[0.5cm]
+    \textsc{\LARGE \kaishu{指导教师\ :\ 刘杰}}\\[0.5cm]
+    \vfill
+    {\Large \today}
+    \end{center}
+\end{titlepage}
+
+
+\newpage
+\thispagestyle{empty}
+\renewcommand{\abstractname}{\kaishu \sihao \textbf{摘要}}
+\begin{abstract}
+本实验围绕重型卡车空气压力系统（APS）故障检测任务，构建了一个面向不平衡二分类场景的传统机器学习分类流程。数据集包含 60000 条训练样本、170 个匿名传感器特征和 1 个类别标签，其中正类样本仅占约 1.67\%。由于题目给出的维修代价函数将一次漏报（FN）的代价设为一次误报（FP）的 50 倍，实验目标并非单纯追求准确率，而是在保持可接受误报数量的同时尽量减少漏报。本文采用 scikit-learn 中的 HistGradientBoostingClassifier 处理表格型传感器特征和缺失值，并在分层验证集上以 $10 \times FP + 500 \times FN$ 为目标搜索分类阈值。实验最终选取阈值 0.0110，在验证集上取得 5320 的 APS Cost、0.9800 的 Recall 和 0.5385 的 F1。在同一份训练数据评测中，模型相较 baseline 将 Cost 从 38140 降低到 16940，说明代价敏感的阈值选择可以有效改善不平衡故障检测任务的实际目标。
+本次作业相关代码已上传至github，仓库地址为 \url{https://github.com/Zemiss/ImbBin-Coursework}
+
+\noindent \textbf{关键字：}空气压力系统；不平衡二分类；梯度提升树；阈值搜索；代价敏感学习
+\end{abstract}
+
+
+\tableofcontents
+
+\newpage
+\watermark{60}{10}{NKU}
+\setcounter{page}{1}
+
+\section{实验目的}
+
+\subsection{实验背景}
+空气压力系统（Air Pressure System, APS）是重型卡车制动和辅助控制中的关键子系统。若 APS 相关故障未能及时识别，车辆可能产生更高的维修成本和安全风险。本实验使用的数据来自 APS 故障检测二分类任务，标签列为 \texttt{class}，其中 \texttt{pos} 表示故障与空气压力系统相关，\texttt{neg} 表示故障与空气压力系统无关。
+
+该任务的主要困难在于类别分布极不平衡。训练数据共有 60000 条样本，其中 \texttt{neg} 为 59000 条，\texttt{pos} 为 1000 条，正类比例约为 1.67\%。在这种数据分布下，如果模型只追求整体准确率，可能倾向于预测多数类，从而漏掉真正的 APS 相关故障。因此，本实验将题目定义的维修代价作为更重要的优化目标。
+
+\subsection{实验目标}
+本实验的目标是完成一个可复现的 APS 故障检测流程，包括数据读取、标签转换、模型训练、阈值选择、模型保存和测试评估。题目给出的维修代价函数为：
+
+\begin{align}
+Cost = 10 \times FP + 500 \times FN
+\end{align}
+
+其中，FP 表示将无关故障误判为 APS 相关故障，FN 表示将 APS 相关故障漏判为无关故障。由于一次 FN 的代价相当于 50 次 FP，本实验在模型评估时更加关注 Recall 和 FN 数量，并通过阈值搜索直接降低总体 Cost。
+
+\section{实验原理}
+
+\subsection{数据处理}
+实验数据存放于 \texttt{data/ml\_train.csv}，任务来源于 APS Failure at Scania Trucks 数据集\cite{uciaps}。每条样本包含 170 个匿名传感器特征和 1 个标签列。数据中的缺失值以字符串 \texttt{na} 表示，程序读取 CSV 时将其转换为 \texttt{NaN}。标签列 \texttt{class} 被转换为二进制数值标签，即 \texttt{pos} 转换为 1，\texttt{neg} 转换为 0。
+
+为了保证验证集能够反映原始类别比例，训练阶段使用分层抽样划分训练子集和验证子集。默认配置中 \texttt{valid\_size=0.2}，因此 80\% 的样本用于拟合验证模型，20\% 的样本用于选择分类阈值。
+
+\subsection{模型选择}
+本实验采用 scikit-learn\cite{pedregosa2011scikit} 中的 \texttt{HistGradientBoostingClassifier} 作为分类模型。该模型属于梯度提升树方法，能够处理表格型数据中的非线性关系，并且可以直接处理缺失值。相比需要额外归一化和缺失值填补的模型，该方法更适合当前包含大量传感器字段和缺失值的任务。
+
+模型主要参数如表 \ref{tab:model-params} 所示。随机种子固定为 42，以保证数据划分和模型训练过程可复现。
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ccc}
+  \toprule
+  参数 & 取值 & 说明\\
+  \midrule
+  \texttt{max\_iter} & 500 & 最大 boosting 迭代轮数\\
+  \texttt{learning\_rate} & 0.04 & 每轮弱学习器的学习率\\
+  \texttt{max\_leaf\_nodes} & 31 & 每棵树的最大叶子节点数\\
+  \texttt{l2\_regularization} & 0.03 & L2 正则化强度\\
+  \texttt{random\_state} & 42 & 随机种子\\
+  \bottomrule
+  \end{tabular}
+  \caption{HistGradientBoostingClassifier 主要参数}
+  \label{tab:model-params}
+\end{table}
+
+\subsection{阈值选择}
+普通二分类模型通常使用 0.5 作为分类阈值，但该策略并不适合本实验的代价函数。因为 FN 的代价远高于 FP，模型需要更积极地识别 \texttt{pos} 类样本。实验在验证集上搜索候选阈值，将正类概率转换为预测标签，并选择 APS Cost 最低的阈值。
+
+候选阈值由两段网格组成：第一段为 0.001 到 0.1，第二段为 0.11 到 0.9。最终选出的分类阈值为 0.0110。较低的阈值提升了模型对正类的敏感性，从而有效减少漏报。
+
+\section{实验步骤}
+
+\subsection{整体流程}
+实验流程如算法 \ref{alg:pipeline} 所示。训练阶段先在训练子集上拟合验证模型，并在验证集上搜索最佳阈值。确定阈值后，程序使用全量训练数据重新训练最终模型，并将模型、阈值、特征列顺序和验证指标保存到 \texttt{main/models/model.joblib}。
+
+\begin{breakablealgorithm}
+  \caption{APS 故障检测训练与评估流程}
+  \label{alg:pipeline}
+  \begin{algorithmic}[1]
+      \Require 训练数据 \texttt{data/ml\_train.csv}，维修代价函数 $Cost=10FP+500FN$
+      \Ensure 最终模型、分类阈值和评估指标
+      \State 读取 CSV，并将 \texttt{na} 转换为缺失值
+      \State 将 \texttt{class} 中的 \texttt{pos}/\texttt{neg} 转换为 1/0
+      \State 使用分层抽样划分训练子集和验证集
+      \State 在训练子集上拟合 \texttt{HistGradientBoostingClassifier}
+      \State 在验证集上输出正类概率
+      \State 遍历候选阈值，计算每个阈值对应的 APS Cost
+      \State 选择 Cost 最低的阈值作为最终分类阈值
+      \State 使用全量训练数据重新训练最终模型
+      \State 保存模型包并在测试阶段加载评估
+  \end{algorithmic}
+\end{breakablealgorithm}
+
+\subsection{配置与运行}
+项目默认配置文件为 \texttt{main/configs/default.yaml}。训练数据路径、模型保存路径、验证集比例和随机种子均由配置文件给出，也可以通过命令行参数临时覆盖。
+
+\begin{lstlisting}[title=训练命令,frame=trbl,language=bash]
+python -m main.train
+\end{lstlisting}
+
+\begin{lstlisting}[title=测试命令,frame=trbl,language=bash]
+python -m main.test
+\end{lstlisting}
+
+当测试数据包含 \texttt{class} 标签列时，程序会输出 Cost、Precision、Recall、F1、Micro-F1、Macro-F1 和混淆矩阵。当测试数据不包含标签列且指定 \texttt{prediction\_path} 时，程序会输出每条样本的正类概率和预测类别。
+
+\section{程序代码}
+
+\subsection{数据读取与标签转换}
+\texttt{main/src/modeling.py} 封装了公共建模函数。数据读取函数将字符串 \texttt{na} 识别为缺失值，标签转换函数将 \texttt{pos} 和 \texttt{neg} 转换为二分类数值标签。
+
+\begin{lstlisting}[title=数据读取与标签转换,frame=trbl,language=Python]
+POS_LABEL = "pos"
+NEG_LABEL = "neg"
+TARGET_COLUMN = "class"
+
+
+def load_data(path: str) -> pd.DataFrame:
+    return pd.read_csv(path, na_values="na")
+
+
+def split_xy(data: pd.DataFrame) -> tuple[pd.DataFrame, np.ndarray]:
+    x = data.drop(columns=[TARGET_COLUMN])
+    y = (data[TARGET_COLUMN] == POS_LABEL).astype(int).to_numpy()
+    return x, y
+\end{lstlisting}
+
+\subsection{模型构建与代价函数}
+模型构建函数返回一个固定参数的 \texttt{HistGradientBoostingClassifier}。维修代价函数从混淆矩阵中取出 FP 和 FN，并按照题目公式计算 Cost。
+
+\begin{lstlisting}[title=模型构建与维修代价计算,frame=trbl,language=Python]
+def make_model(random_state: int = 42) -> HistGradientBoostingClassifier:
+    return HistGradientBoostingClassifier(
+        max_iter=500,
+        learning_rate=0.04,
+        max_leaf_nodes=31,
+        l2_regularization=0.03,
+        random_state=random_state,
+    )
+
+
+def aps_cost(y_true: np.ndarray, y_pred: np.ndarray) -> int:
+    tn, fp, fn, tp = confusion_matrix(y_true, y_pred, labels=[0, 1]).ravel()
+    return int(10 * fp + 500 * fn)
+\end{lstlisting}
+
+\subsection{阈值搜索与指标评估}
+阈值搜索函数遍历候选阈值，并选择验证集 APS Cost 最低的阈值。评估函数统一计算 Cost、Precision、Recall、F1、Micro-F1、Macro-F1 和混淆矩阵，便于训练和测试脚本复用。
+
+\begin{lstlisting}[title=阈值搜索,frame=trbl,language=Python]
+def threshold_grid() -> np.ndarray:
+    return np.r_[np.linspace(0.001, 0.1, 100), np.linspace(0.11, 0.9, 80)]
+
+
+def select_threshold(
+    y_true: np.ndarray, scores: np.ndarray, thresholds: Iterable[float] | None = None
+) -> tuple[float, int]:
+    best_threshold = 0.5
+    best_cost: int | None = None
+    for threshold in threshold_grid() if thresholds is None else thresholds:
+        pred = (scores >= threshold).astype(int)
+        cost = aps_cost(y_true, pred)
+        if best_cost is None or cost < best_cost:
+            best_cost = cost
+            best_threshold = float(threshold)
+    return best_threshold, int(best_cost)
+\end{lstlisting}
+
+\subsection{训练与测试入口}
+\texttt{main/train.py} 先使用分层验证集选择阈值，再用全量训练数据训练最终模型。模型包中保存最终模型、分类阈值、特征列顺序、验证集指标和随机种子。\texttt{main/test.py} 加载该模型包，对齐特征列后输出预测概率，并根据训练阶段选出的阈值得到预测类别。
+
+\begin{lstlisting}[title=训练阶段核心逻辑,frame=trbl,language=Python]
+x, y = split_xy(data)
+x_train, x_valid, y_train, y_valid = train_test_split(
+    x,
+    y,
+    test_size=args.valid_size,
+    stratify=y,
+    random_state=args.random_state,
+)
+
+validation_model = make_model(args.random_state)
+validation_model.fit(x_train, y_train)
+valid_scores = validation_model.predict_proba(x_valid)[:, 1]
+threshold, validation_cost = select_threshold(y_valid, valid_scores)
+valid_pred = (valid_scores >= threshold).astype(int)
+valid_metrics = evaluate_predictions(y_valid, valid_pred)
+\end{lstlisting}
+
+\section{实验结果显示}
+
+\subsection{验证集结果}
+在分层验证集上，模型选出的最佳分类阈值为 0.0110。验证集混淆矩阵和主要指标如表 \ref{tab:valid-result} 所示。
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{cc}
+  \toprule
+  指标 & 数值\\
+  \midrule
+  混淆矩阵 [TN FP FN TP] & [11468, 332, 4, 196]\\
+  APS Cost & 5320\\
+  Precision & 0.3712\\
+  Recall & 0.9800\\
+  F1 & 0.5385\\
+  Micro-F1 & 0.9720\\
+  Macro-F1 & 0.7620\\
+  \bottomrule
+  \end{tabular}
+  \caption{分层验证集实验结果}
+  \label{tab:valid-result}
+\end{table}
+
+从验证集结果可以看出，模型仅漏判 4 个正类样本，Recall 达到 0.9800。虽然由于正类比例很低，Precision 仍然低于 Recall，但该结果符合本任务对漏报更敏感的代价设置。
+
+\subsection{与 baseline 对比}
+在同一份 \texttt{data/ml\_train.csv} 上评测时，本实验模型与 baseline 的结果如表 \ref{tab:baseline-compare} 所示。
+
+\begin{table}[H]
+  \centering
+  \scriptsize
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{ccccccccc}
+  \toprule
+  模型 & 阈值 & 混淆矩阵 [TN FP FN TP] & Cost & Precision & Recall & F1 & Micro-F1 & Macro-F1\\
+  \midrule
+  Baseline & 0.49 & [57386, 1614, 44, 956] & 38140 & 0.3720 & 0.9560 & 0.5356 & 0.9724 & 0.7607\\
+  本实验模型 & 0.0110 & [57606, 1394, 6, 994] & 16940 & 0.4162 & 0.9940 & 0.5868 & 0.9767 & 0.7874\\
+  \bottomrule
+  \end{tabular}
+  }
+  \caption{本实验模型与 baseline 的评测结果对比}
+  \label{tab:baseline-compare}
+\end{table}
+
+对比结果表明，本实验模型将 APS Cost 从 38140 降低到 16940。漏报数 FN 从 44 降低到 6，误报数 FP 也从 1614 降低到 1394。同时，Precision、Recall、F1、Micro-F1 和 Macro-F1 均高于 baseline，说明模型并不是单纯通过增加误报换取召回率，而是在当前数据上同时改善了正类识别能力和整体分类效果。
+
+\section{实验分析总结}
+
+本任务的核心挑战来自类别极不平衡和错误代价不对称。若只关注准确率或 Micro-F1，模型可能由于多数类 \texttt{neg} 占比过高而获得看似较好的整体指标，但这类模型容易漏判少数类 \texttt{pos}。在 APS 场景中，漏判相关故障的维修代价远高于误报，因此单纯使用默认阈值并不合适。
+
+本实验使用梯度提升树处理表格特征和缺失值，并在验证集上直接以维修代价作为阈值选择标准。降低阈值后，模型会更积极地预测 \texttt{pos}，从而提高 Recall 并减少 FN。由于一次 FN 的代价为 500，而一次 FP 的代价仅为 10，减少漏报可以显著降低总 Cost。
+
+从结果看，阈值 0.0110 与本任务的代价函数较为匹配。模型在减少 FN 的同时也减少了 FP，因此 Cost 的下降不是由误报增加换来的，而是来自模型排序能力和阈值策略的共同改善。本文完成了 APS 空气压力系统故障检测实验报告的完整流程说明。实验使用梯度提升树分类器建立传统机器学习模型，利用分层验证集搜索代价敏感分类阈值，并以 APS Cost、Precision、Recall、F1、Micro-F1 和 Macro-F1 作为主要评估指标。结果显示，本实验模型在验证集上取得 5320 的 Cost 和 0.9800 的 Recall，在同一份训练数据评测中相较 baseline 将 Cost 从 38140 降低到 16940。
+
+综上，本实验方法能够较好适应 APS 故障检测中的不平衡二分类特点。它不依赖深度学习框架，而是通过适合表格数据的梯度提升树和面向维修代价的阈值选择，有效降低了漏报带来的高额成本。
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
