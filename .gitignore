@@ -15,7 +15,6 @@ env/
 
 # Local experiment artifacts.
 *.zip
-*.pdf
 predictions.csv
 
 # OS and editor files.
